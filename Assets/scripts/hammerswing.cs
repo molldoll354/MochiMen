@@ -6,7 +6,8 @@ public class hammerswing : MonoBehaviour
 {
 	public GameObject hammer;
 	bool canSwing;
-	bool canRaise;
+	bool canRaise = true;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -15,28 +16,35 @@ public class hammerswing : MonoBehaviour
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	void FixedUpdate ()
 	{
-		if (Input.GetKey (KeyCode.A)) {
-			if (hammer.transform.eulerAngles.z < 31) {
-				transform.Rotate (0f, 0f, 100f * Time.deltaTime);
+		//Debug.Log ("" + canRaise + " " + canSwing);
+		if (canRaise == true) {
+			if (Input.GetKey (KeyCode.A)) {
+				if (hammer.transform.eulerAngles.z < 31 || hammer.transform.eulerAngles.z > 200) {
+					transform.Rotate (0f, 0f, 400f * Time.deltaTime);
+					canSwing = true;
+				}
 			}
 		}
-		if (hammer.transform.eulerAngles.z > 30) {
-			canSwing = true;
-			canRaise = false;
-		}
+		//if (hammer.transform.eulerAngles.z > 30) {
+			//canSwing = true;
+			//canRaise = false;
+		//}
 		if (canSwing == true) {
 			if (Input.GetKey (KeyCode.S)) {
-				transform.Rotate (0f, 0f, -100f * Time.deltaTime);
+				transform.Rotate (0f, 0f, -400f * Time.deltaTime);
+				canRaise = false;
 			}
 		} 
 	}
-	void OnCollisionEnter(Collision other){
-		if (other.collider.tag == "mochi") {
+
+	void OnCollisionEnter2D (Collision2D coll)
+	{
+		if (coll.gameObject.CompareTag ("mochi")) {
+			Debug.Log ("HIT");
 			canSwing = false;
 			canRaise = true;
-			Debug.Log ("HIT");
 		}
 	}
 }
