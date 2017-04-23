@@ -4,36 +4,35 @@ using UnityEngine;
 
 public class hammerswing : MonoBehaviour
 {
-	public GameObject hammer;
+	Transform hammer;
+	public float rotateSpeed;
+	public float maxAngleBack;
+	public float maxAngleForward;
 	bool canSwing;
 	bool canRaise = true;
 
-	// Use this for initialization
 	void Start ()
 	{
+		hammer = this.GetComponent<Transform> ();
 		canSwing = false;
 		canRaise = true;
 	}
 	
-	// Update is called once per frame
 	void FixedUpdate ()
 	{
-		//Debug.Log ("" + canRaise + " " + canSwing);
 		if (canRaise == true) {
 			if (Input.GetKey (KeyCode.A)) {
-				if (hammer.transform.eulerAngles.z < 31 || hammer.transform.eulerAngles.z > 200) {
-					transform.Rotate (0f, 0f, 400f * Time.deltaTime);
+				Debug.Log ("should raise");
+				if (hammer.eulerAngles.z < maxAngleBack + 1f || hammer.eulerAngles.z > maxAngleForward) {
+					transform.Rotate (0f, 0f, rotateSpeed * Time.deltaTime);
 					canSwing = true;
 				}
 			}
 		}
-		//if (hammer.transform.eulerAngles.z > 30) {
-			//canSwing = true;
-			//canRaise = false;
-		//}
+
 		if (canSwing == true) {
 			if (Input.GetKey (KeyCode.S)) {
-				transform.Rotate (0f, 0f, -400f * Time.deltaTime);
+				hammer.Rotate (0f, 0f, -1 * rotateSpeed * Time.deltaTime);
 				canRaise = false;
 			}
 		} 
