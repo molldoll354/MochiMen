@@ -38,12 +38,19 @@ public class hammerswing : MonoBehaviour
 		} 
 	}
 
-	void OnCollisionEnter2D (Collision2D coll)
+	void OnTriggerEnter2D (Collider2D coll)
 	{
+		Debug.Log ("HIT");
 		if (coll.gameObject.CompareTag ("mochi")) {
-			Debug.Log ("HIT");
 			canSwing = false;
 			canRaise = true;
+			MochiZone.score++;
+		}
+	}
+	void OnCollisionExit2D (Collision2D other){
+		if(other.gameObject.CompareTag("hand")){
+			MochiZone.fails++;
+			MochiZone.score = 0;
 		}
 	}
 }

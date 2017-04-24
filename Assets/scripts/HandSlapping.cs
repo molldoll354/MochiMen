@@ -18,11 +18,16 @@ public class HandSlapping : MonoBehaviour {
 		}
 	}
 
-	void OnCollisionEnter2D(Collision2D other){
-		Debug.Log ("HIT");
-
-
-
+	void OnCollisionExit2D(Collision2D other){
+		if(other.gameObject.CompareTag("hammer")){
+			MochiZone.score = 0;
+			MochiZone.fails++;
+		}
+	}
+	void OnTriggerEnter2D(Collider2D other){
+		if(other.gameObject.CompareTag("mochi")){
+			MochiZone.score++;
+		}
 	}
 
 	IEnumerator FollowPath(){
