@@ -22,7 +22,7 @@ public class hammerswing : MonoBehaviour
 	{
 		if (canRaise == true) {
 			if (Input.GetKey (KeyCode.A)) {
-				Debug.Log ("should raise");
+				//Debug.Log ("should raise");
 				if (hammer.eulerAngles.z < maxAngleBack + 1f || hammer.eulerAngles.z > maxAngleForward) {
 					transform.Rotate (0f, 0f, rotateSpeed * Time.deltaTime);
 					canSwing = true;
@@ -38,12 +38,19 @@ public class hammerswing : MonoBehaviour
 		} 
 	}
 
-	void OnCollisionEnter2D (Collision2D coll)
+	void OnTriggerEnter2D (Collider2D coll)
 	{
+		//Debug.Log ("HIT");
 		if (coll.gameObject.CompareTag ("mochi")) {
-			Debug.Log ("HIT");
 			canSwing = false;
 			canRaise = true;
+			//MochiZone.score++;
 		}
 	}
+//	void OnCollisionExit2D (Collision2D other){
+//		if(other.gameObject.CompareTag("hand")){
+//			MochiZone.fails++;
+//			Timing.score = 0;
+//		}
+//	}
 }
