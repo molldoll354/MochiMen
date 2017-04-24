@@ -10,7 +10,7 @@ public class MochiZone : MonoBehaviour {
 	public GameObject hand;
 	public static int score;
 	public static int fails;
-	public Text finishText;
+	//public Text finishText;
 	// Use this for initialization
 	void Start () {
 		score = 0;
@@ -22,10 +22,10 @@ public class MochiZone : MonoBehaviour {
 		Debug.Log ("Score: " + score + " Fails: " + fails);
 
 		if (score == 10) {
-			finishText.text = "You Win!";
+			//finishText.text = "You Win!";
 		}
 		if (fails == 3) {
-			finishText.text = "You Lose!";
+			//finishText.text = "You Lose!";
 		}
 	}
 }
