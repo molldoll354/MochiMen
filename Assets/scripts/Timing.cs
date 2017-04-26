@@ -4,37 +4,48 @@ using UnityEngine;
 
 public class Timing : MonoBehaviour {
 
-	public AudioClip[] hammerHits;
-	public AudioClip[] handHits;
-	public bool hammerHit;
-	public bool handHit;
+	//public float hammerHitTime;
+	//public float handHitTime;
+	//public float maxTimeDifference;
+	public bool hammerLeave;
+	public bool handLeave;
 	public static float score;
 	float timer;
 
+
 	void Start () {
 		timer = 5;
-		handHit = false;
+		handLeave = false;
+		GetComponent<Animator> ().SetBool ("handHit", false);
+		GetComponent<Animator> ().SetBool ("hammerHit", false);
 	}
 	
 	void Update () {
 		//Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
-		if (handHit == true) {
+		if (handLeave == true) {
 			timer -= Time.deltaTime;
 			}
 		}
-		
 	void OnTriggerEnter2D(Collider2D other){
-		Debug.Log("Score: " + score);
 		if (other.gameObject.CompareTag ("hand")){
-			Sound.me.PlaySound (ChooseRandomSound (handHits), 1f);
-			handHit = true;
+			GetComponent<Animator> ().SetBool ("handHit", true);
+		}
+		if (other.gameObject.CompareTag ("hammer")) {
+			GetComponent<Animator> ().SetBool ("hammerHit", true);
+		}
+	}
+	void OnTriggerExit2D(Collider2D other){
+		//Debug.Log ("HIT");
+		if (other.gameObject.CompareTag ("hand")){
+			handLeave = true;
+			GetComponent<Animator> ().SetBool ("handHit", false);
 		}
 		if (other.gameObject.CompareTag ("hammer")){
-			Sound.me.PlaySound (ChooseRandomSound (hammerHits), 1f);
-			if(handHit==true){
+			GetComponent<Animator> ().SetBool ("hammerHit", false);
+			if(handLeave==true){
 				if (timer > 0) {
 					score++;
-					handHit = false;
+					handLeave = false;
 					timer = 5;
 				}
 			}
@@ -45,4 +56,5 @@ public class Timing : MonoBehaviour {
 		int numSounds = sounds.Length;
 		return sounds [Random.Range (0, numSounds - 1)];
 	}
+
 }
