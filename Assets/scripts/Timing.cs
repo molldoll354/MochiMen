@@ -7,33 +7,45 @@ public class Timing : MonoBehaviour {
 	//public float hammerHitTime;
 	//public float handHitTime;
 	//public float maxTimeDifference;
-	public bool hammerHit;
-	public bool handHit;
+	public bool hammerLeave;
+	public bool handLeave;
 	public static float score;
 	float timer;
 
+
 	void Start () {
 		timer = 5;
-		handHit = false;
+		handLeave = false;
+		GetComponent<Animator> ().SetBool ("handHit", false);
+		GetComponent<Animator> ().SetBool ("hammerHit", false);
 	}
 	
 	void Update () {
 		//Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
-		if (handHit == true) {
+		if (handLeave == true) {
 			timer -= Time.deltaTime;
 			}
 		}
-
+	void OnTriggerEnter2D(Collider2D other){
+		if (other.gameObject.CompareTag ("hand")){
+			GetComponent<Animator> ().SetBool ("handHit", true);
+		}
+		if (other.gameObject.CompareTag ("hammer")) {
+			GetComponent<Animator> ().SetBool ("hammerHit", true);
+		}
+	}
 	void OnTriggerExit2D(Collider2D other){
 		//Debug.Log ("HIT");
 		if (other.gameObject.CompareTag ("hand")){
-			handHit = true;
+			handLeave = true;
+			GetComponent<Animator> ().SetBool ("handHit", false);
 		}
 		if (other.gameObject.CompareTag ("hammer")){
-			if(handHit==true){
+			GetComponent<Animator> ().SetBool ("hammerHit", false);
+			if(handLeave==true){
 				if (timer > 0) {
 					score++;
-					handHit = false;
+					handLeave = false;
 					timer = 5;
 				}
 			}
