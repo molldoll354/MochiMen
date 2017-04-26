@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class Timing : MonoBehaviour {
 
-	//public float hammerHitTime;
-	//public float handHitTime;
-	//public float maxTimeDifference;
+	public AudioClip[] hammerHits;
+	public AudioClip[] handHits;
 	public bool hammerHit;
 	public bool handHit;
 	public static float score;
@@ -18,18 +17,21 @@ public class Timing : MonoBehaviour {
 	}
 	
 	void Update () {
-		//Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
+		Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
 		if (handHit == true) {
 			timer -= Time.deltaTime;
 			}
 		}
+		
 
-	void OnTriggerExit2D(Collider2D other){
-		//Debug.Log ("HIT");
+	void OnTriggerEnter2D(Collider2D other){
+		
 		if (other.gameObject.CompareTag ("hand")){
+			Sound.me.PlaySound (ChooseRandomSound (handHits), 1f);
 			handHit = true;
 		}
 		if (other.gameObject.CompareTag ("hammer")){
+			Sound.me.PlaySound (ChooseRandomSound (hammerHits), 1f);
 			if(handHit==true){
 				if (timer > 0) {
 					score++;
@@ -39,4 +41,10 @@ public class Timing : MonoBehaviour {
 			}
 		}
 	}
+
+	AudioClip ChooseRandomSound(AudioClip[] sounds){
+		int numSounds = sounds.Length;
+		return sounds [Random.Range (0, numSounds - 1)];
+	}
+
 }
