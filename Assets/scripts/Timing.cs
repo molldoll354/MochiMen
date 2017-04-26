@@ -17,15 +17,14 @@ public class Timing : MonoBehaviour {
 	}
 	
 	void Update () {
-		Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
+		//Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
 		if (handHit == true) {
 			timer -= Time.deltaTime;
 			}
 		}
 		
-
 	void OnTriggerEnter2D(Collider2D other){
-		
+		Debug.Log("Score: " + score);
 		if (other.gameObject.CompareTag ("hand")){
 			Sound.me.PlaySound (ChooseRandomSound (handHits), 1f);
 			handHit = true;
@@ -46,5 +45,4 @@ public class Timing : MonoBehaviour {
 		int numSounds = sounds.Length;
 		return sounds [Random.Range (0, numSounds - 1)];
 	}
-
 }
