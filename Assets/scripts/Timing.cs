@@ -4,49 +4,39 @@ using UnityEngine;
 
 public class Timing : MonoBehaviour {
 
-	public float hammerHitTime;
-	public float handHitTime;
-	public float maxTimeDifference;
+	//public float hammerHitTime;
+	//public float handHitTime;
+	//public float maxTimeDifference;
 	public bool hammerHit;
 	public bool handHit;
-	public float score;
+	public static float score;
 	float timer;
 
 	void Start () {
-		timer = 1000;
+		timer = 5;
+		handHit = false;
 	}
 	
 	void Update () {
-		Debug.Log("Score: " + score + " Time: "+ timer);
+		//Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
 		if (handHit == true) {
 			timer -= Time.deltaTime;
 			}
 		}
 
-	void OnCollisionEnter2D(Collision2D other){
-		Debug.Log ("HIT");
-		if (other.gameObject.tag == "hand"){
-			//handHitTime = Time.time;
-			//CheckTiming ();
-			//Debug.Log 
+	void OnTriggerExit2D(Collider2D other){
+		//Debug.Log ("HIT");
+		if (other.gameObject.CompareTag ("hand")){
 			handHit = true;
 		}
-		if (other.gameObject.tag == "hammer"){
-			//hammerHitTime = Time.time;
-			//CheckTiming ();
-			//Debug.Log ("Score: " + score);
-			if(timer > 0){
-				score++;
-				handHit = false;
-				timer = 1000;
+		if (other.gameObject.CompareTag ("hammer")){
+			if(handHit==true){
+				if (timer > 0) {
+					score++;
+					handHit = false;
+					timer = 5;
+				}
 			}
 		}
 	}
-
-//	void CheckTiming(){
-	//	if (Mathf.Abs(handHitTime - hammerHitTime) <= maxTimeDifference){
-		//	score++;
-	//	}
-	//}
-
 }
