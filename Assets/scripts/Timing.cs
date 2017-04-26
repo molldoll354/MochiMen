@@ -51,4 +51,10 @@ public class Timing : MonoBehaviour {
 			}
 		}
 	}
+
+	AudioClip ChooseRandomSound(AudioClip[] sounds){
+		int numSounds = sounds.Length;
+		return sounds [Random.Range (0, numSounds - 1)];
+	}
+
 }
