@@ -21,7 +21,7 @@ public class Timing : MonoBehaviour {
 	}
 	
 	void Update () {
-		//Debug.Log("" + handHit + " Score: " + score + " Time: "+ timer);
+		Debug.Log(" Score: " + score + " Time: "+ timer);
 		if (handLeave == true) {
 			timer -= Time.deltaTime;
 			}
