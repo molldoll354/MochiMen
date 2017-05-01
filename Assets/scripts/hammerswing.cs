@@ -10,34 +10,35 @@ public class hammerswing : MonoBehaviour
 	public float maxAngleForward;
 	bool canSwing;
 	bool canRaise = true;
-
+	Animator anim;
 	void Start ()
 	{
 		hammer = this.GetComponent<Transform> ();
 		canSwing = false;
 		canRaise = true;
+		anim = GetComponent<Animator> ();
 	}
-	
 	void FixedUpdate ()
 	{
-		if (canRaise == true) {
-			if (Input.GetKey (KeyCode.A)) {
-				//Debug.Log ("should raise");
-				if (hammer.eulerAngles.z < maxAngleBack + 1f || hammer.eulerAngles.z > maxAngleForward) {
-					transform.Rotate (0f, 0f, rotateSpeed * Time.deltaTime);
-					canSwing = true;
-				}
-			}
-		}
-
-		if (canSwing == true) {
-			if (Input.GetKey (KeyCode.S)) {
-				hammer.Rotate (0f, 0f, -1 * rotateSpeed * Time.deltaTime);
-				canRaise = false;
-			}
-		} 
-	}
-
+		anim.SetBool ("upswing", Input.GetKey (KeyCode.A));
+		anim.SetBool ("downswing", Input.GetKey (KeyCode.S));
+//		if (canRaise == true) {
+//			if (Input.GetKey (KeyCode.A)) {
+//				//Debug.Log ("should raise");
+//				if (hammer.eulerAngles.z < maxAngleBack + 1f || hammer.eulerAngles.z > maxAngleForward) {
+//					transform.Rotate (0f, 0f, rotateSpeed * Time.deltaTime);
+//					canSwing = true;
+//				}
+//			}
+//		}
+//
+//		if (canSwing == true) {
+//			if (Input.GetKey (KeyCode.S)) {
+//				hammer.Rotate (0f, 0f, -1 * rotateSpeed * Time.deltaTime);
+//				canRaise = false;
+//			}
+//		} 
+	}		
 	void OnTriggerEnter2D (Collider2D coll)
 	{
 		//Debug.Log ("HIT");
@@ -53,4 +54,4 @@ public class hammerswing : MonoBehaviour
 //			Timing.score = 0;
 //		}
 //	}
-}
+}
