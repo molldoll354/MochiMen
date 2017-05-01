@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class mochi : MonoBehaviour {
+public class Mochi : MonoBehaviour {
 
 	public Animator mochiAnimatior;
 
@@ -21,11 +21,9 @@ public class mochi : MonoBehaviour {
 
 	void PlayAnimation(){
 		mochiAnimatior.Play ("handSlap");
-		Debug.Log ("played");
 	}
 
 	void OnCollisionEnter2D(Collision2D other){
 		//mochiAnimatior.Play ("handSlap");
-		Debug.Log ("should play");
 	}
 }
