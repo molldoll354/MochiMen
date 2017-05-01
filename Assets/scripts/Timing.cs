@@ -9,8 +9,8 @@ public class Timing : MonoBehaviour {
 	//public float handHitTime;
 	//public float maxTimeDifference;
 	public Text scoreText;
-	public bool hammerLeave;
-	public bool handLeave;
+	bool hammerLeave;
+	bool handLeave;
 	float timer;
 	public AudioClip[] hammerHitSounds;
 	public AudioClip[] handHitSounds;
