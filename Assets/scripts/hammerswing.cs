@@ -10,7 +10,10 @@ public class hammerswing : MonoBehaviour
 	public float maxAngleForward;
 	bool canSwing;
 	bool canRaise = true;
-	Animator anim;
+	Animator anim;
+	public AudioClip handSoundA;
+	public AudioClip handSoundB;
+
 	void Start ()
 	{
 		hammer = this.GetComponent<Transform> ();
@@ -20,8 +23,17 @@ public class hammerswing : MonoBehaviour
 	}
 	void FixedUpdate ()
 	{
+
+		if (Input.GetKeyDown(KeyCode.A)){
+			Sound.me.PlaySound (handSoundA, 1f);
+		}
+		if (Input.GetKeyDown(KeyCode.S)){
+			Sound.me.PlaySound (handSoundB, 1f);
+		}
+
 		anim.SetBool ("upswing", Input.GetKey (KeyCode.A));
-		anim.SetBool ("downswing", Input.GetKey (KeyCode.S));
+		anim.SetBool ("downswing", Input.GetKey (KeyCode.S));
+
 //		if (canRaise == true) {
 //			if (Input.GetKey (KeyCode.A)) {
 //				//Debug.Log ("should raise");
@@ -38,7 +50,8 @@ public class hammerswing : MonoBehaviour
 //				canRaise = false;
 //			}
 //		} 
-	}		
+	}
+		
 	void OnTriggerEnter2D (Collider2D coll)
 	{
 		//Debug.Log ("HIT");
@@ -54,4 +67,4 @@ public class hammerswing : MonoBehaviour
 //			Timing.score = 0;
 //		}
 //	}
-}
+}

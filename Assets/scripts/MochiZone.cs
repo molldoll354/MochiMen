@@ -26,7 +26,9 @@ public class MochiZone : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (score == 2) {
+		//scoreText.text = "SCORE: " + score;
+
+		if (score == 10) {
 			if (!hasStartedMochiZone) {
 				Camera.main.gameObject.GetComponent<AudioSource> ().clip = mochiZoneSound;
 				Camera.main.gameObject.GetComponent<AudioSource> ().Play ();
@@ -34,15 +36,15 @@ public class MochiZone : MonoBehaviour {
 			}
 			StartCoroutine (fadeImageIn(mochiZoneImage));
 		}
-		if (score == 3){
+		if (score == 20){
 			StartCoroutine (fadeImageIn(mochiZoneImage2));
 		}
-		if (score == 4){
+		if (score == 30){
 			StartCoroutine (fadeImageIn(mochiZoneImage3));
 		}
-		if (score == 5){
+		if (score == 40){
 			StartCoroutine (FadeScreenOut ());
-			//Time.timeScale = 0;
+			SceneManager.LoadScene ("victory scene");
 		}
 
 		/*
@@ -52,8 +54,6 @@ public class MochiZone : MonoBehaviour {
 	}
 
 	IEnumerator FadeScreenOut(){
-		//AsyncOperation myCoolVariable = SceneManager.LoadSceneAsync("victory scene",LoadSceneMode.Single); 
-		//myCoolVariable.allowSceneActivation = false;
 		while (true){
 			finalImage.color = new Color (0, 0, 0, finalImage.color.a + imageFadeSpeed * Time.unscaledDeltaTime);
 			if (finalImage.color.a >= 1f) {
