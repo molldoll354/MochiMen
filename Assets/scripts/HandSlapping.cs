@@ -6,6 +6,7 @@ public class HandSlapping : MonoBehaviour {
 	public Transform[] pathPoints;
 	public float moveSpeed;
 	public bool isMoving;
+	public AudioClip handSound;
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +15,7 @@ public class HandSlapping : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space) && !isMoving){
+			Sound.me.PlaySound (handSound, 1f);
 			StartCoroutine("FollowPath");
 		}
 	}
