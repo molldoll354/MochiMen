@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MochiZone : MonoBehaviour {
 
@@ -11,9 +12,13 @@ public class MochiZone : MonoBehaviour {
 	public static int score;
 	public static int fails;
 	public Image mochiZoneImage;
-	public float mochiZoneImageFadeSpeed;
+	public Image mochiZoneImage2;
+	public Image mochiZoneImage3;
+	public Image finalImage;
+	public float imageFadeSpeed;
 	public AudioClip mochiZoneSound;
 	public Text finishText;
+	public bool hasStartedMochiZone;
 
 	void Start () {
 		score = 0;
@@ -21,15 +26,23 @@ public class MochiZone : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (score == 10) {
-			// now in mochi zone
-			Camera.main.gameObject.GetComponent<AudioSource>().clip = mochiZoneSound;
-			Camera.main.gameObject.GetComponent<AudioSource> ().Play ();
-			StartCoroutine ("fadeImageIn");
+		if (score == 2) {
+			if (!hasStartedMochiZone) {
+				Camera.main.gameObject.GetComponent<AudioSource> ().clip = mochiZoneSound;
+				Camera.main.gameObject.GetComponent<AudioSource> ().Play ();
+				hasStartedMochiZone = true;
+			}
+			StartCoroutine (fadeImageIn(mochiZoneImage));
 		}
-		if (score == 20){
-			finishText.gameObject.SetActive (true);
-			Time.timeScale = 0;
+		if (score == 3){
+			StartCoroutine (fadeImageIn(mochiZoneImage2));
+		}
+		if (score == 4){
+			StartCoroutine (fadeImageIn(mochiZoneImage3));
+		}
+		if (score == 5){
+			StartCoroutine (FadeScreenOut ());
+			//Time.timeScale = 0;
 		}
 
 		/*
@@ -38,12 +51,31 @@ public class MochiZone : MonoBehaviour {
 		*/
 	}
 
-	IEnumerator fadeImageIn(){
-		while(mochiZoneImage.color.a < 1f){
-			mochiZoneImage.color = new Color (mochiZoneImage.color.r, mochiZoneImage.color.g, mochiZoneImage.color.b, mochiZoneImage.color.a + mochiZoneImageFadeSpeed * Time.deltaTime);
+	IEnumerator FadeScreenOut(){
+		//AsyncOperation myCoolVariable = SceneManager.LoadSceneAsync("victory scene",LoadSceneMode.Single); 
+		//myCoolVariable.allowSceneActivation = false;
+		while (true){
+			finalImage.color = new Color (0, 0, 0, finalImage.color.a + imageFadeSpeed * Time.unscaledDeltaTime);
+			if (finalImage.color.a >= 1f) {
+			//	myCoolVariable.allowSceneActivation = true;
+				SceneManager.LoadScene("victory scene");
+			}
+			yield return null;
+		}
+	}
+
+	IEnumerator fadeImageIn(Image fadeThisImage){
+		while(fadeThisImage.color.a < 1f){
+			fadeThisImage.color = new Color (fadeThisImage.color.r, fadeThisImage.color.g, fadeThisImage.color.b, fadeThisImage.color.a + imageFadeSpeed * Time.deltaTime);
 			yield return new WaitForFixedUpdate();
 		}
+	}
 
+	IEnumerator fadeImageIn(SpriteRenderer fadeThisImage){
+		while(fadeThisImage.color.a < 1f){
+			fadeThisImage.color = new Color (fadeThisImage.color.r, fadeThisImage.color.g, fadeThisImage.color.b, fadeThisImage.color.a + imageFadeSpeed * Time.deltaTime);
+			yield return new WaitForFixedUpdate();
+		}
 	}
 
 }
