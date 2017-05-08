@@ -43,8 +43,9 @@ public class MochiZone : MonoBehaviour {
 			StartCoroutine (fadeImageIn(mochiZoneImage3));
 		}
 		if (score == 40){
-			StartCoroutine (FadeScreenOut ());
-			SceneManager.LoadScene ("victory scene");
+			Fungus.Flowchart.BroadcastFungusMessage ("LoadVS");
+//			StartCoroutine (FadeScreenOut ());
+//			SceneManager.LoadScene ("victory scene");
 		}
 
 		/*
