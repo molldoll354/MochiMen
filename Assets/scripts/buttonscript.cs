@@ -23,7 +23,7 @@ public class buttonscript : MonoBehaviour {
 	public GameObject quitButt;
 
 	public void PlayScene(){
-		SceneManager.LoadScene ("dialogueTest (copy)");
+		SceneManager.LoadScene ("dialogueTest");
 	}
 	public void OpenInstructions(){
 		Camera.main.GetComponent<Blur> ().enabled = true;
